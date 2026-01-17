@@ -75,3 +75,4 @@ function buscarProduto() {
 //--- 6 --- Inicialização ---
 // faz a primeira renderização ao carregar a página.
 renderizarProdutos(produtos);
+

@@ -1,0 +1,33 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+header{
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#vitrine{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;  
+    justify-content: center;
+}
+.card-produto{
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.card-produto img{
+    color: #333;
+    font-size: 1.2rem;;
+}       
+.card-produto h3{
+    color: #27ae60;
+    font-weight: bold;
+}

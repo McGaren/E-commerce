@@ -8,8 +8,18 @@
 </head>
 <body>
     <header>
-        <h1>Loja Tech</h1>
+        <h1>FB-TECHNOLOGY</h1>
+        <div id="Carrinho-container">
+            🛒Carrinho: <span id="contador">0</span>
+            itens
+        </div>
     </header>
+    <div class="filtros">
+        <input type="text" id="campo-busca" placeholder="Buscar produto..."oninput="buscarProduto()">
+        <button type="button" onclick="mostrarTodos()">Mostrar Todos</button>
+        <button type="button" onclick="filtrarDisponiveis()">Apenas Disponíveis</button>
+        <button type="button" onclick="filtrarIndisponiveis()">Apenas Indisponíveis</button>
+    </div>
     <main id="vitrine">
     </main>
      <script src="e-commerce.js" defer></script>

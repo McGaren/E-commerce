@@ -23,11 +23,32 @@ header{
     text-align: center;
 }
 
-.card-produto img{
-    color: #333;
-    font-size: 1.2rem;;
-}       
 .card-produto h3{
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}       
+.card-produto p{
     color: #27ae60;
     font-weight: bold;
 }
+button{
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+button:hover{
+    background-color: orangered;
+}
+button:disabled{
+    background-color: gray;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+

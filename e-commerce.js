@@ -76,3 +76,20 @@ function buscarProduto() {
 // faz a primeira renderização ao carregar a página.
 renderizarProdutos(produtos);
 
+function aplicarCupom(){
+    const cupom = document.querySelector("#input-cupom").value;
+
+    if(cupom === "PROMO10"){
+        const produtosComDesconto = produtos.map( p =>{
+        return {
+            ...p, // Espalhamos as propriedades originais(nome, estoque)
+            preco: p.preco * 0.9 //Sobrescrevemos apenas o preço
+        };
+    });
+
+    renderizarProdutos(produtosComDesconto);
+    alert("Cupon aplicado! 10% de desconto em tudo. ")
+    } else {
+        alert("Cupom inválido!");
+    }
+}

@@ -1,15 +1,38 @@
 // --- 1 --- Lista de produtos disponíveis na loja
 
-const produtos = [
-    { nome: "Mouse Gamer", preco: 150.00, emEstoque: true },
-    { nome: "Teclado Mecânico", preco: 300.00, emEstoque: true },
-    { nome: "Monitor 144hz", preco: 1200.00, emEstoque: false },
-    { nome: "Headset Usb", preco: 250.00, emEstoque: true },
-    { nome: "Webcam 4k", preco: 400.00, emEstoque: false },
-    { nome: "Cadeira Gamer", preco: 850.00, emEstoque: true },
-];
+// let produtos = [
+//     { nome: "Mouse Gamer", preco: 150.00, emEstoque: true },
+//     { nome: "Teclado Mecânico", preco: 300.00, emEstoque: true },
+//     { nome: "Monitor 144hz", preco: 1200.00, emEstoque: false },
+//     { nome: "Headset Usb", preco: 250.00, emEstoque: true },
+//     { nome: "Webcam 4k", preco: 400.00, emEstoque: false },
+//     { nome: "Cadeira Gamer", preco: 850.00, emEstoque: true },
+// ];
 
+let produtos=[];
 // --- 2 --- Seleção de elementos do DOM
+
+async function buscarProdutosAPI(){
+
+    try{
+        const resposta = await fetch('https://fakestoreapi.com/products');
+        const dados  = await resposta.json();
+
+        produtos = dados.map(item => ({
+            nome: item.title,
+            preco: item.price,
+            imagem: item.image,
+            emEstoque: true
+        }));
+
+        renderizarProdutos(produtos);
+    } catch (erro){
+        console.log(`Erro ao buscar o produtos`, erro);
+        vitrine.innerHTML = "<p>Erro ao carregar produtos. Tente novamente.</p>";
+    }
+
+
+};
 
 const vitrine = document.querySelector("#vitrine");
 const contadorElemento = document.querySelector("#contador");
@@ -26,6 +49,8 @@ function renderizarProdutos(listaParaExibir){
         // Criamos o html dinamicamente
         const card = `
         <div class="card-produto">
+            <img src="${produto.imagem}" alt="${produto.nome}" class="foto-produto">
+
             <h3>${produto.nome}</h3>
             <p>R$ ${produto.preco.toFixed(2)}</p>
             <button type="button" onclick="adicionarAoCarrinho(${index})" ${produto.emEstoque ? "" : "disabled"}>
@@ -61,6 +86,10 @@ function adicionarAoCarrinho(index) {
     qtdCarrinho ++;
 
     contadorElemento.innerText = qtdCarrinho;
+    salvarCarrinhoNoStorage();
+
+    alert(`Você adicionou ${item.nome} ao carrinho!`);
+    salvarCarrinhoNoStorage();
     console.log(`Adicionado: ${item.nome} ao carrinho.`);
 }
 
@@ -93,3 +122,31 @@ function aplicarCupom(){
         alert("Cupom inválido!");
     }
 }
+
+function salvarCarrinhoNoStorage(){
+    localStorage.setItem("qtdItens", qtdCarrinho);
+}
+
+function carregarCarrinhoDoStorage(){
+    const salvo = localStorage.getItem("qtdItens");
+    if(salvo){
+         qtdCarrinho = parseInt(salvo);
+         contadorElemento.innerText = qtdCarrinho;
+    }
+}
+
+carregarCarrinhoDoStorage();
+buscarProdutosAPI()
+
+function limparCarrinho(){
+    if(confirm("Deseja realmente remover todos os itens do carrinho?")){
+
+        qtdCarrinho = 0;
+
+        contadorElemento.innerText = qtdCarrinho;
+        salvarCarrinhoNoStorage();
+
+        console.log("Não há itens no carrinho")
+    }
+}
+

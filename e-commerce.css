@@ -85,3 +85,28 @@ button:disabled{
     text-overflow: ellipsis;
     margin-bottom: 10px;
 }
+
+    #carrinho-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#contador {
+    background-color: #ff4757;
+    color: white;
+    font-size:  0.8rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 50%;
+    position: relative;
+    top: -10px;
+    left: -5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+
+.pulso{
+    transform: scale(1.3);
+}

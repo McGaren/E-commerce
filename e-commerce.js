@@ -14,24 +14,38 @@ let produtos=[];
 
 async function buscarProdutosAPI(){
 
+    vitrine.innerHTML =`
+    <div class="loading">
+        <p> A carregar produtos incriveis para você...<p>
+    </div>
+    `;
+
     try{
         const resposta = await fetch('https://fakestoreapi.com/products');
+
+        if(!resposta.ok){
+           throw new Error("Não foi possível contatar o servidor."); 
+        }
         const dados  = await resposta.json();
 
         produtos = dados.map(item => ({
             nome: item.title,
             preco: item.price,
             imagem: item.image,
+            categoria: item.category,
             emEstoque: true
         }));
 
         renderizarProdutos(produtos);
     } catch (erro){
-        console.log(`Erro ao buscar o produtos`, erro);
-        vitrine.innerHTML = "<p>Erro ao carregar produtos. Tente novamente.</p>";
+        console.error(`Erro Fatall:`, erro);
+        vitrine.innerHTML = `
+        <div  class="erro-container">
+            <p> ⚠️ Ups! Tivemos um problema ao carregar a loja.</p>
+            <button type="button onclick="buscarProdutosAPI()">Tentar Novamente</button>
+        </div>
+        `;
     }
-
-
 };
 
 const vitrine = document.querySelector("#vitrine");
@@ -86,6 +100,12 @@ function adicionarAoCarrinho(index) {
     qtdCarrinho ++;
 
     contadorElemento.innerText = qtdCarrinho;
+    contadorElemento.classList.add("pulso");
+
+    setTimeout(( ) => {
+        contadorElemento.classList.remove("pulso")
+    }, 200);
+
     salvarCarrinhoNoStorage();
 
     alert(`Você adicionou ${item.nome} ao carrinho!`);
@@ -96,10 +116,17 @@ function adicionarAoCarrinho(index) {
 function buscarProduto() {
     const termoBusca = inputBusca.value.toLowerCase();
     const resultado = produtos.filter(produto => {
-        return produto.nome.toLowerCase().includes(termoBusca);
+        return produto.nome.toLowerCase().includes(termoBusca) ||
+        produto.categoria.toLowerCase().includes(termoBusca)
     });
     renderizarProdutos(resultado);
 }
+
+function filtrarPorCategoria(categoriaAlvo){
+    const filtrados = produtos.filter(p => p.categoria === categoriaAlvo)
+    renderizarProdutos(filtrados);
+}
+
 
 //--- 6 --- Inicialização ---
 // faz a primeira renderização ao carregar a página.

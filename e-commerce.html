@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>FB-TECHNOLOGY</h1>
-        <div id="Carrinho-container">
+        <div id="carrinho-container">
             🛒Carrinho: <span id="contador">0</span>
             itens <button type="button" onclick="limparCarrinho()" id="btn-limpar">limpar</button>
         </div>
@@ -24,6 +24,9 @@
         <button type="button" onclick="mostrarTodos()">Mostrar Todos</button>
         <button type="button" onclick="filtrarDisponiveis()">Apenas Disponíveis</button>
         <button type="button" onclick="filtrarIndisponiveis()">Apenas Indisponíveis</button>
+        <button type="button" onclick="filtrarPorCategoria('men\'s clothing')">Roupas Masculinas</button>
+        <button type="button" onclick="filtrarPorCategoria('jewelery')">Joias</button>
+        <button type="button" onclick="filtrarPorCategoria('electronics')">Eletrônicos</button>
     </div>
     <main id="vitrine">
     </main>

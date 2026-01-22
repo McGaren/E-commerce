@@ -1,16 +1,10 @@
-// --- 1 --- Lista de produtos disponíveis na loja
-
-// let produtos = [
-//     { nome: "Mouse Gamer", preco: 150.00, emEstoque: true },
-//     { nome: "Teclado Mecânico", preco: 300.00, emEstoque: true },
-//     { nome: "Monitor 144hz", preco: 1200.00, emEstoque: false },
-//     { nome: "Headset Usb", preco: 250.00, emEstoque: true },
-//     { nome: "Webcam 4k", preco: 400.00, emEstoque: false },
-//     { nome: "Cadeira Gamer", preco: 850.00, emEstoque: true },
-// ];
-
-let produtos=[];
+let produtos = [];
+let listaCarrinho =[];
 // --- 2 --- Seleção de elementos do DOM
+
+const vitrine = document.querySelector("#vitrine");
+const contadorElemento = document.querySelector("#contador");
+const inputBusca = document.querySelector("#campo-busca");
 
 async function buscarProdutosAPI(){
 
@@ -48,12 +42,7 @@ async function buscarProdutosAPI(){
     }
 };
 
-const vitrine = document.querySelector("#vitrine");
-const contadorElemento = document.querySelector("#contador");
-const inputBusca = document.querySelector("#campo-busca");
-
 //--- 3 --- Estado da aplicação - Quantidade de itens no carrinho (ALTERÁVEL)
-let qtdCarrinho = 0;
 
 // --- 4 --- Funções principais da aplicação - renderização (Desenham na tela).
 function renderizarProdutos(listaParaExibir){
@@ -80,7 +69,6 @@ renderizarProdutos(produtos);
 
 // --- 5 --- Funções de logica e interação.
 
-
 function filtrarDisponiveis(){
     const disponiveis = produtos.filter(produto => produto.emEstoque === true);
     renderizarProdutos(disponiveis);
@@ -97,11 +85,11 @@ function mostrarTodos(){
 
 function adicionarAoCarrinho(index) {
     const item = produtos[index];
-    qtdCarrinho ++;
+    listaCarrinho.push(item)
 
-    contadorElemento.innerText = qtdCarrinho;
+    contadorElemento.innerText = listaCarrinho.length;
+
     contadorElemento.classList.add("pulso");
-
     setTimeout(( ) => {
         contadorElemento.classList.remove("pulso")
     }, 200);
@@ -151,14 +139,14 @@ function aplicarCupom(){
 }
 
 function salvarCarrinhoNoStorage(){
-    localStorage.setItem("qtdItens", qtdCarrinho);
+    localStorage.setItem("carrinhoSalvo", JSON.stringify(listaCarrinho));
 }
 
 function carregarCarrinhoDoStorage(){
-    const salvo = localStorage.getItem("qtdItens");
+    const salvo = localStorage.getItem("carrinhoSalvo");
     if(salvo){
-         qtdCarrinho = parseInt(salvo);
-         contadorElemento.innerText = qtdCarrinho;
+         listaCarrinho = JSON.parse(salvo);
+         contadorElemento.innerText = listaCarrinho.length;
     }
 }
 
@@ -168,12 +156,17 @@ buscarProdutosAPI()
 function limparCarrinho(){
     if(confirm("Deseja realmente remover todos os itens do carrinho?")){
 
-        qtdCarrinho = 0;
+        listaCarrinho = [];
 
-        contadorElemento.innerText = qtdCarrinho;
-        salvarCarrinhoNoStorage();
+        contadorElemento.innerText = 0;
+        localStorage.removeItem("carrinhoSalvo")
+        
 
         console.log("Não há itens no carrinho")
     }
 }
 
+function calcularTotal (){
+    const total = listaCarrinho.reduce((soma, produto) => soma + produto.preco, 0);
+    console.log(`Total da compra: R$ ${total.toFixed(2)}`);
+}

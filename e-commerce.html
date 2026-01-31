@@ -3,33 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce</title>
+    <title>FB-VAREJO - E-commerce</title>
     <link rel="stylesheet" href="e-commerce.css">
 </head>
 <body>
     <header>
         <h1>FB-VAREJO</h1>
         <div id="carrinho-container">
-            🛒Carrinho: <span id="contador">0</span>
-            itens <button type="button" onclick="limparCarrinho()" id="btn-limpar">limpar</button>
+            🛒Carrinho: <span id="contador">0</span> itens 
+            <button type="button" onclick="irParaCheckout()" id="btn-checkout-header">Ver Resumo</button>
+            <button type="button" onclick="limparCarrinho()" id="btn-limpar">Limpar</button>
         </div>
     </header>
+
     <div class="cupom-area">
         <input type="text" id="input-cupom" placeholder="Digite o cupom (PROMO10)">
         <button type="button" onclick="aplicarCupom()">Aplicar Desconto</button> 
-
     </div>
+
     <div class="filtros">
-        <input type="text" id="campo-busca" placeholder="Buscar produto..."oninput="buscarProduto()">
+        <input type="text" id="campo-busca" placeholder="Buscar produto..." oninput="buscarProduto()">
         <button type="button" onclick="mostrarTodos()">Mostrar Todos</button>
         <button type="button" onclick="filtrarDisponiveis()">Apenas Disponíveis</button>
-        <button type="button" onclick="filtrarIndisponiveis()">Apenas Indisponíveis</button>
         <button type="button" onclick="filtrarPorCategoria('men\'s clothing')">Roupas Masculinas</button>
         <button type="button" onclick="filtrarPorCategoria('jewelery')">Joias</button>
         <button type="button" onclick="filtrarPorCategoria('electronics')">Eletrônicos</button>
     </div>
-    <main id="vitrine">
-    </main>
-     <script src="e-commerce.js" defer></script>
+
+    <main id="vitrine"></main>
+
+    <section id="secao-checkout" class="escondido">
+        <h2>Resumo do Pedido</h2>
+        <div id="lista-resumo"></div>
+        <hr>
+        <div id="total-container">
+            <strong>Total: R$ <span id="valor-total">0.00</span></strong>
+        </div>
+        <div class="botoes-checkout">
+            <button type="button" onclick="finalizarCompra()">Confirmar Pagamento</button>
+            <button type="button" onclick="voltarParaLoja()" id="btn-voltar">Voltar</button>
+        </div>
+    </section>
+
+    <script src="e-commerce.js" defer></script>
 </body>
 </html>

@@ -36,7 +36,7 @@ async function buscarProdutosAPI(){
         vitrine.innerHTML = `
         <div  class="erro-container">
             <p> ⚠️ Ups! Tivemos um problema ao carregar a loja.</p>
-            <button type="button onclick="buscarProdutosAPI()">Tentar Novamente</button>
+            <button type="button" onclick="buscarProdutosAPI()">Tentar Novamente</button>
         </div>
         `;
     }
@@ -65,8 +65,6 @@ function renderizarProdutos(listaParaExibir){
     });
 };
 
-renderizarProdutos(produtos);
-
 // --- 5 --- Funções de logica e interação.
 
 function filtrarDisponiveis(){
@@ -85,11 +83,15 @@ function mostrarTodos(){
 
 function adicionarAoCarrinho(index) {
     const item = produtos[index];
+    if(listaCarrinho.length >= 5){
+        alert("Limite de cinco itens por cliente atingido");
+        return
+    }
     listaCarrinho.push(item)
 
     contadorElemento.innerText = listaCarrinho.length;
-
     contadorElemento.classList.add("pulso");
+    
     setTimeout(( ) => {
         contadorElemento.classList.remove("pulso")
     }, 200);
@@ -112,7 +114,6 @@ function buscarProduto() {
 
 function filtrarPorCategoria(categoriaAlvo){
     const filtrados = produtos.filter(p => p.categoria === categoriaAlvo)
-    renderizarProdutos(filtrados);
 }
 
 
